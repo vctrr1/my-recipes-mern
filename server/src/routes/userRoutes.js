@@ -14,11 +14,11 @@ router.post("/register", async (req, res) => {
   //response(resposta) é usado para enviar dados de volta para quem fez o request
 
   //Username e password sao resgatados do frontend
-  const { username, password } = req.body; // frontend precisa enviar um obj contendo username e password
+  const { userName, password } = req.body; // frontend precisa enviar um obj contendo username e password
 
   //procura o username no banco de dados atravez do userModel
   const user = await userModel.findOne({
-    username: username,
+    username: userName,
   });
 
   if (user) {
@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
 
   //cria novo usuario com senha criptografada
   const newUser = new userModel({
-    username: username,
+    username: userName,
     password: hashedPassword,
   });
 
