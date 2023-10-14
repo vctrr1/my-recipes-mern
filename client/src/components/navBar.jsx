@@ -11,7 +11,7 @@ export const NavBar = () => {
       <div>
         <div className="nav-container">
           <NavLink to={"/create-recipe"} className="nav">
-            Criar Receita
+            Cadastrar Nova Receita
           </NavLink>
           <NavLink to={"/saved-recipes"} className="nav">
             Minhas Receitas
