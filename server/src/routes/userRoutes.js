@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { userModel } from "../models/users.js";
+import { UserModel } from "../models/users.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
   const { userName, password } = req.body; // frontend precisa enviar um obj contendo username e password
 
   //procura o username no banco de dados atravez do userModel
-  const user = await userModel.findOne({
+  const user = await UserModel.findOne({
     username: userName,
   });
 
@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   //cria novo usuario com senha criptografada
-  const newUser = new userModel({
+  const newUser = new UserModel({
     username: userName,
     password: hashedPassword,
   });
@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
   const { userName, password } = req.body;
 
   //procura o username no banco de dados atravez do userModel
-  const user = await userModel.findOne({ username: userName });
+  const user = await UserModel.findOne({ username: userName });
 
   //se usuario nao existir, a variavel acima for falsa entao usuario n existe no bd
   if (!user) {
@@ -67,4 +67,4 @@ router.post("/login", async (req, res) => {
   res.json({ token: token, userID: user._id });
 });
 
-export { router as userRouter };
+export { router as UserRouter };
