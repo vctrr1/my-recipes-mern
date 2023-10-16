@@ -1,24 +1,41 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
+  const [cookie, setCookies] = useCookies(["access_token"]);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setCookies("access_token", "");
+    window.localStorage.removeItem("userID");
+    navigate("/auth");
+  };
+
   return (
     <div className="navbar">
-      <NavLink to={"/"} className="title">
+      <Link to={"/"} className="title">
         <img src={logo} className="logo" />
         My Recipes
-      </NavLink>
+      </Link>
       <div>
         <div className="nav-container">
-          <NavLink to={"/create-recipe"} className="nav">
+          <Link to={"/create-recipe"} className="nav">
             Cadastrar Nova Receita
-          </NavLink>
-          <NavLink to={"/saved-recipes"} className="nav">
+          </Link>
+          <Link to={"/saved-recipes"} className="nav">
             Minhas Receitas
-          </NavLink>
-          <NavLink to={"/auth"} className="nav">
-            Login/Cadastro
-          </NavLink>
+          </Link>
+          {!cookie.access_token ? (
+            <Link to={"/auth"} className="nav">
+              Login/Cadastro
+            </Link>
+          ) : (
+            <button className="logoutButton" onClick={logout}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </div>
