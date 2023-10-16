@@ -53,5 +53,53 @@
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-size: 20px;
+  background-color: #dbd9d9;
+}
+
+.full-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.create-recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os elementos na direção principal (vertical) */
+  justify-content: center; /* Centraliza os elementos na direção transversal (horizontal) */
+  height: 650px; /* Garante que o componente ocupa toda a altura da viewport */
+  width: 600px;
+  margin: auto;
+  text-align: center; /* Alinha o texto ao centro */
+  background-color: rgb(73, 73, 73);
+  border-radius: 15px;
+}
+
+.create-recipe form {
+  max-width: 360px; /* Define a largura máxima do formulário para evitar que ele fique muito largo */
+  width: 100%; /* Garante que o formulário ocupa toda a largura disponível */
+  margin-top: 20px; /* Espaço superior para separar o formulário do título */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza na vertical */
+  justify-content: center; /* Centraliza na horizontal */
+}
+.create-recipe label {
+  color: #dbd9d9;
+}
+
+.create-recipe h2 {
+  color: #dbd9d9;
+}
+
+.create-recipe input,
+.create-recipe textarea {
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px; /* Espaçamento entre os elementos do formulário */
+  width: 100%; /* Garante que os elementos do formulário ocupem toda a largura do formulário */
 }
