@@ -42,10 +42,10 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   //Username e password sao resgatados do frontend
-  const { username, password } = req.body;
+  const { userName, password } = req.body;
 
   //procura o username no banco de dados atravez do userModel
-  const user = await userModel.findOne({ username });
+  const user = await userModel.findOne({ username: userName });
 
   //se usuario nao existir, a variavel acima for falsa entao usuario n existe no bd
   if (!user) {
