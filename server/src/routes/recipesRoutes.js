@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   try {
     const recipe = await RecipeModel.findById(req.body.recipeID);
-    const user = await UserModel.findById(req.body.recipeID);
+    const user = await UserModel.findById(req.body.userID);
     //adiciona ao final das receitas salvas do usuario especifico a nova receita
     user.savedRecipes.push(recipe);
     await user.save(); //salva as mudanças na coleção
