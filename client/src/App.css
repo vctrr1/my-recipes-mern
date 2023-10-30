@@ -166,4 +166,16 @@ body {
   button:hover {
     background-color: #45a049;
   }
+
+  .center-button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  button:disabled {
+    background-color: #ccc; /* Cor de fundo para botões desativados */
+    color: #666; /* Cor do texto para botões desativados */
+    cursor: not-allowed; /* Altera o cursor para indicar que o botão está desativado */
+    /* Adicione outros estilos conforme necessário */
+  }
 }

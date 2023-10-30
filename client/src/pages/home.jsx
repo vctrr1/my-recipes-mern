@@ -5,7 +5,10 @@ import { useGetUserId } from "../hooks/useGetUserId";
 export const Home = () => {
   // Acompanha todas as receitas que existem no bd
   const [recipes, setRecipes] = useState([]);
+
+  const [savedRecipes, setSavedRecipes] = useState([]);
   const userID = useGetUserId();
+
   // Obter as receitas
   useEffect(() => {
     // useEffect é chamado toda vez que o componente for renderizado
@@ -13,14 +16,27 @@ export const Home = () => {
       try {
         const response = await axios.get("http://localhost:5100/recipes");
         setRecipes(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
+
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5100/recipes/savedRecipes/ids/${userID}`
+        );
+        console.log(response.data);
+        setSavedRecipes(response.data.savedRecipes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     // Chame a função fetchRecipes aqui para buscar as receitas quando o componente for montado
     fetchRecipes();
-  }, []); // O segundo argumento vazio [] indica que este efeito deve ser executado apenas uma vez após a montagem inicial do componente
+    fetchSavedRecipes();
+  }, [userID]); // O segundo argumento vazio [] indica que este efeito deve ser executado apenas uma vez após a montagem inicial do componente
 
   const saveRecipe = async (recipeID) => {
     try {
@@ -28,11 +44,13 @@ export const Home = () => {
         recipeID,
         userID,
       });
-      console.log(response);
+      setSavedRecipes(response.data.savedRecipes);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
     <div className="home">
@@ -49,7 +67,13 @@ export const Home = () => {
               <p>Instruções: {recipe.instruction}</p>
             </div>
             <p>Tempo de Preparo: {recipe.cookingTime} (Minutos)</p>
-            <button onClick={() => saveRecipe(recipe._id)}>Salvar</button>
+            <button
+              className="center-button"
+              onClick={() => saveRecipe(recipe._id)}
+              disabled={isRecipeSaved(recipe._id)}
+            >
+              Salvar
+            </button>
           </li>
         ))}
       </ul>
