@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     res.json(error);
   }
 });
-//permine salvar uma receita, é importante pq
+//permine salvar uma receita
 router.put("/", async (req, res) => {
   try {
     const recipe = await RecipeModel.findById(req.body.recipeID);
@@ -39,9 +39,9 @@ router.put("/", async (req, res) => {
   }
 });
 //pega os IDs das receitas salvas do usuario pegando o ID do usuario logado
-router.get("/savedRecipes/id", async (req, res) => {
+router.get("/savedRecipes/ids/:userId", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userID);
+    const user = await UserModel.findById(req.params.userId);
     res.json({ savedRecipes: user?.savedRecipes });
   } catch (error) {
     res.json(error);
@@ -50,7 +50,7 @@ router.get("/savedRecipes/id", async (req, res) => {
 
 router.get("/savedRecipes", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userID);
+    const user = await UserModel.findById(req.body.userId);
     const savedRecipes = await RecipeModel.find({
       _id: { $in: user.savedRecipes },
     });
